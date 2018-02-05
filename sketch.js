@@ -6,24 +6,24 @@ var message = 'abcdefghijklmnopqrstuvwxyz'; //default message
 var leading = 10; //spacing between lines
 var bg = '#feffe4'; //default bg color
 var tracking = 20; //space between letters
-var paddingTop = 150; 
-var paddingBottom = 150;
+var Top = 100; 
+var bottom = 100;
 // when adjusting code, be careful with ranges of these in sliders if padding is too big it'll overlap and not draw
 // make paddingLeft and right between 0 and some fraction of windowWidth (maybe Math.floor(windowwidth / 5))
-var maxWidth = 1000; //max width of space that can be drawn on
-var paddingLeft = 20;
-var paddingRight = 20;
+var maxWidth = 1200; //max width of space that can be drawn on
+var Left = 100;
+var Right = 20;
 var fontStyle = 0.5
 
 /////letters variables/////
 var col = [['#ef4131', '#ffe600', '#2e3196', '#ec008c'],
-            ['#223f97', '#f9cf0a', '#daf21c', '#d3f4e2'],
+            ['#2e3ed5', '#c6f3f1', '#c620ff', '#ffe000'],
             ['#30d6ad', '#ff6eed', '#0d33d3', '#e6db14'],
             ['#10cc89', '#0f34b8', '#d033d5', '#ef4216'],
             ['#564eed', '#fbc773', '#f26950', '#0e2eaf'],
             ['#fbbb1a', '#ffcec4', '#a027af', '#1c27bc'],
             ['#5ebd74', '#e87543', '#40238a', '#ffcf4a'],
-            ['#dbf035', '#97d7c6', '#fa765e', '#303b90'],
+            ['#dbf035', '#FF3E78', '#0031CB', '#15EACF'],
             ['#3625f5', '#596fff', '#ffe225', '#fc83c0'],
             ['#28bf94', '#ffffff', '#1d49c5', '#fccaf0'],
             ['#f2562a', '#29328e', '#a2109b', '#f0322b']];
@@ -41,36 +41,42 @@ var fontB = {'a': b_a, 'b': b_b, 'c': b_c, 'd': b_d, 'e': b_e, 'f': b_f,
             'y': b_y, 'z': b_z
             }; //storing all functions of the bettina's font into an object
 
+
+function background_color() {
+    document.body.style.backgroundColor = bg;
+}
+
 function setup() {
 	
 	//Create the GUI
     gui = createGui('Customize!', windowWidth - 250, 40);
     sliderRange(30, 100, 5);
     gui.addGlobals('unit');
-    sliderRange(10, 100, 2);
+    sliderRange(10, 150, 2);
     gui.addGlobals('leading');
     gui.addGlobals('tracking');
-    gui.addGlobals('paddingTop','paddingBottom');
-    gui.addGlobals('paddingLeft','paddingRight');
+    gui.addGlobals('Top','bottom');
+    gui.addGlobals('Left','Right');
     sliderRange(0, 10, 1);
     gui.addGlobals('colorPalette','bg','message'); 
     sliderRange(0, 1, 0.1);
     gui.addGlobals('fontStyle');
     noLoop(); //only redraws when gui is changed
+
 }
 
 function draw() {
     var numLetters = message.length;
     //determines height needed for canvas
-    var canvasSpace = maxWidth - paddingLeft - paddingRight + tracking; //the space letters can be drawn
+    var canvasSpace = maxWidth - Left - Right + tracking; //the space letters can be drawn
     var numLettersInRow = Math.floor(canvasSpace / (unit + tracking));
     var maxVertical = Math.floor(numLetters / numLettersInRow); //number of rows or max vertical height
-    var maxEndY = maxVertical * (unit + leading) + paddingTop;
+    var maxEndY = maxVertical * (unit + leading) + Top;
     //adds on enough vertical space for another row of letters
     if(numLetters !== 0) { 
         maxEndY += unit;
     }
-    var maxHeight = maxEndY + paddingBottom; 
+    var maxHeight = maxEndY + bottom;
     createCanvas(maxWidth, maxHeight);
     background(bg);
     noStroke();
@@ -79,16 +85,17 @@ function draw() {
         var cur = message[i]; //stores current letter string
         typeLetter(cur,i); 
     }
+    background_color();
 }
 
 function typeLetter(ltr,i) {
     //determines startX and startY
-    var startX = i * (unit + tracking) + paddingLeft;
-    var canvasSpace = maxWidth - paddingLeft - paddingRight + tracking; //the space letters can be drawn
+    var startX = i * (unit + tracking) + Left;
+    var canvasSpace = maxWidth - Left - Right + tracking; //the space letters can be drawn
     var numLettersInRow = Math.floor(canvasSpace / (unit + tracking));
-    startX = i % numLettersInRow * (unit + tracking) + paddingLeft; //makes sure startX stays within canvas
+    startX = i % numLettersInRow * (unit + tracking) + Left; //makes sure startX stays within canvas
     var vertical = Math.floor(i / numLettersInRow);
-    var startY = vertical * (unit + leading) + paddingTop; //moves startY down when text goes to next line
+    var startY = vertical * (unit + leading) + Top; //moves startY down when text goes to next line
     var curCol = col[colorPalette];
     var fontCounter = random(1);
     if (ltr != " ") {
