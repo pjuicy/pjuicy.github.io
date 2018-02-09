@@ -14,6 +14,7 @@ var maxWidth = 1200; //max width of space that can be drawn on
 var Left = 100;
 var Right = 20;
 var fontStyle = 0.5
+var curCol;
 
 /////letters variables/////
 var col = [['#ef4131', '#ffe600', '#2e3196', '#ec008c'],
@@ -24,9 +25,9 @@ var col = [['#ef4131', '#ffe600', '#2e3196', '#ec008c'],
             ['#fbbb1a', '#ffcec4', '#a027af', '#1c27bc'],
             ['#5ebd74', '#e87543', '#40238a', '#ffcf4a'],
             ['#dbf035', '#FF3E78', '#0031CB', '#15EACF'],
-            ['#3625f5', '#596fff', '#ffe225', '#fc83c0'],
+            ['#ffe225', '#596fff', '#3625f5', '#fc83c0'],
             ['#28bf94', '#ffffff', '#1d49c5', '#fccaf0'],
-            ['#f2562a', '#29328e', '#a2109b', '#f0322b']];
+            ['#f5662a', '#29328e', '#a2109b', '#f0322b']];
 		   //color palette array
 var fontA = {'a': a_a, 'b': a_b, 'c': a_c, 'd': a_d, 'e': a_e, 'f': a_f,
             'g': a_g, 'h': a_h, 'i': a_i, 'j': a_j, 'k': a_k, 'l': a_l, 
@@ -44,6 +45,21 @@ var fontB = {'a': b_a, 'b': b_b, 'c': b_c, 'd': b_d, 'e': b_e, 'f': b_f,
 
 function background_color() {
     document.body.style.backgroundColor = bg;
+}
+
+function control_color() {
+    document.querySelector(".qs_title_bar").style.backgroundColor = curCol[1];
+    document.querySelector(".qs_main").style.backgroundColor = curCol[0];
+    document.querySelector(".qs_range").style.backgroundColor = curCol[2];
+    document.querySelector("input#leading.qs_range").style.backgroundColor = curCol[2];
+    document.querySelector("input#tracking.qs_range").style.backgroundColor = curCol[2];
+    document.querySelector("input#Top.qs_range").style.backgroundColor = curCol[2];
+    document.querySelector("input#bottom.qs_range").style.backgroundColor = curCol[2];
+    document.querySelector("input#Left.qs_range").style.backgroundColor = curCol[2];
+    document.querySelector("input#Right.qs_range").style.backgroundColor = curCol[2];
+    document.querySelector("input#colorPalette.qs_range").style.backgroundColor = curCol[2];
+    document.querySelector("input#fontStyle.qs_range").style.backgroundColor = curCol[2];
+    document.querySelector(".qs_range:focus").style.backgroundColor = curCol[3];
 }
 
 function setup() {
@@ -86,6 +102,7 @@ function draw() {
         typeLetter(cur,i); 
     }
     background_color();
+    control_color();
 }
 
 function typeLetter(ltr,i) {
@@ -96,7 +113,7 @@ function typeLetter(ltr,i) {
     startX = i % numLettersInRow * (unit + tracking) + Left; //makes sure startX stays within canvas
     var vertical = Math.floor(i / numLettersInRow);
     var startY = vertical * (unit + leading) + Top; //moves startY down when text goes to next line
-    var curCol = col[colorPalette];
+    curCol = col[colorPalette];
     var fontCounter = random(1);
     if (ltr != " ") {
 	   if (fontCounter <= fontStyle) {
