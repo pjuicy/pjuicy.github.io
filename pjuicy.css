@@ -103,7 +103,11 @@
 @font-face {font-family: 'ConduitITCPro-Medium';src: url('webfonts/35C210_D_0.eot');src: url('webfonts/35C210_D_0.eot?#iefix') format('embedded-opentype'),url('webfonts/35C210_D_0.woff2') format('woff2'),url('webfonts/35C210_D_0.woff') format('woff'),url('webfonts/35C210_D_0.ttf') format('truetype');}
 
 
-body { font-family: ConduitITCPro-Medium; }
+body { font-family: ConduitITCPro-Medium;
+       font-size: 12px;
+       text-transform: uppercase;
+
+}
 
 
 .qs_main {  text-align:left;
