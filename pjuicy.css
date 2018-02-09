@@ -58,6 +58,8 @@
  * © 2018 MyFonts Inc
 */
 
+
+/* @import must be at top of file, otherwise CSS will not work */
 @import url("/count/35c210");
 
   
@@ -101,29 +103,4 @@
  
   
 @font-face {font-family: 'ConduitITCPro-Medium';src: url('webfonts/35C210_D_0.eot');src: url('webfonts/35C210_D_0.eot?#iefix') format('embedded-opentype'),url('webfonts/35C210_D_0.woff2') format('woff2'),url('webfonts/35C210_D_0.woff') format('woff'),url('webfonts/35C210_D_0.ttf') format('truetype');}
-
-
-body { font-family: ConduitITCPro-Medium; }
-
-
-.qs_main {background-color: #ffffff;}
-
-
-.qs_title_bar {
-    text-align: center;
-    width: 100px;
-}
-
-
-.qs_content{
-    padding: 10px;
-    width: 228px;
-}
-
-label.qs_color_label {
-    -webkit-border-before: none;
-    -webkit-border-after: none;
-    -webkit-border-start: none;
-    -webkit-border-end: none;
-}
-
+ 
