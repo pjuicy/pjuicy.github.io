@@ -11,8 +11,8 @@ var bottom = 100;
 // when adjusting code, be careful with ranges of these in sliders if padding is too big it'll overlap and not draw
 // make paddingLeft and right between 0 and some fraction of windowWidth (maybe Math.floor(windowwidth / 5))
 var maxWidth = 1200; //max width of space that can be drawn on
-var Left = 100;
-var Right = 20;
+var Horizontal = 100;
+//var Right = 20;
 var fontStyle = 0.5
 var curCol;
 
@@ -55,8 +55,8 @@ function control_color() {
     document.querySelector("input#tracking.qs_range").style.backgroundColor = curCol[2];
     document.querySelector("input#Top.qs_range").style.backgroundColor = curCol[2];
     document.querySelector("input#bottom.qs_range").style.backgroundColor = curCol[2];
-    document.querySelector("input#Left.qs_range").style.backgroundColor = curCol[2];
-    document.querySelector("input#Right.qs_range").style.backgroundColor = curCol[2];
+    document.querySelector("input#Horizontal.qs_range").style.backgroundColor = curCol[2];
+    //document.querySelector("input#Right.qs_range").style.backgroundColor = curCol[2];
     document.querySelector("input#colorPalette.qs_range").style.backgroundColor = curCol[2];
     document.querySelector("input#fontStyle.qs_range").style.backgroundColor = curCol[2];
     document.querySelector(".qs_range:focus").style.backgroundColor = curCol[3];
@@ -65,14 +65,14 @@ function control_color() {
 function setup() {
 	
 	//Create the GUI
-    gui = createGui('Customize!', windowWidth - 250, 40);
+    gui = createGui('Customize!', -1, -1);
     sliderRange(30, 100, 5);
     gui.addGlobals('unit');
     sliderRange(10, 150, 2);
     gui.addGlobals('leading');
     gui.addGlobals('tracking');
     gui.addGlobals('Top','bottom');
-    gui.addGlobals('Left','Right');
+    gui.addGlobals('Horizontal');
     sliderRange(0, 10, 1);
     gui.addGlobals('colorPalette','bg','message'); 
     sliderRange(0, 1, 0.1);
@@ -84,7 +84,7 @@ function setup() {
 function draw() {
     var numLetters = message.length;
     //determines height needed for canvas
-    var canvasSpace = maxWidth - Left - Right + tracking; //the space letters can be drawn
+    var canvasSpace = maxWidth - 2 * Horizontal + tracking; //the space letters can be drawn
     var numLettersInRow = Math.floor(canvasSpace / (unit + tracking));
     var maxVertical = Math.floor(numLetters / numLettersInRow); //number of rows or max vertical height
     var maxEndY = maxVertical * (unit + leading) + Top;
@@ -107,10 +107,10 @@ function draw() {
 
 function typeLetter(ltr,i) {
     //determines startX and startY
-    var startX = i * (unit + tracking) + Left;
-    var canvasSpace = maxWidth - Left - Right + tracking; //the space letters can be drawn
+    var startX = i * (unit + tracking) + Horizontal;
+    var canvasSpace = maxWidth - 2*Horizontal + tracking; //the space letters can be drawn
     var numLettersInRow = Math.floor(canvasSpace / (unit + tracking));
-    startX = i % numLettersInRow * (unit + tracking) + Left; //makes sure startX stays within canvas
+    startX = i % numLettersInRow * (unit + tracking) + Horizontal; //makes sure startX stays within canvas
     var vertical = Math.floor(i / numLettersInRow);
     var startY = vertical * (unit + leading) + Top; //moves startY down when text goes to next line
     curCol = col[colorPalette];
@@ -122,6 +122,10 @@ function typeLetter(ltr,i) {
         else {
             fontA[ltr](startX, startY, curCol);
         }
+    }
+    
+    if (startY < 10) {
+        startY = 10;
     }
 }
 
