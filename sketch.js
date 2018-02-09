@@ -27,7 +27,7 @@ var col = [['#ef4131', '#ffe600', '#2e3196', '#ec008c'],
             ['#dbf035', '#FF3E78', '#0031CB', '#15EACF'],
             ['#ffe225', '#596fff', '#3625f5', '#fc83c0'],
             ['#28bf94', '#ffffff', '#1d49c5', '#fccaf0'],
-            ['#f5662a', '#29328e', '#a2109b', '#f0322b']];
+            ['#f5662a', '#30309e', '#a2109b', '#f0322b']];
 		   //color palette array
 var fontA = {'a': a_a, 'b': a_b, 'c': a_c, 'd': a_d, 'e': a_e, 'f': a_f,
             'g': a_g, 'h': a_h, 'i': a_i, 'j': a_j, 'k': a_k, 'l': a_l, 
