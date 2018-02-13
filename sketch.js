@@ -72,6 +72,7 @@ function setup() {
     gui.addGlobals('leading');
     gui.addGlobals('tracking');
     gui.addGlobals('Top','bottom');
+    sliderRange(10, 300, 2);
     gui.addGlobals('Horizontal');
     sliderRange(0, 10, 1);
     gui.addGlobals('colorPalette','bg','message'); 
