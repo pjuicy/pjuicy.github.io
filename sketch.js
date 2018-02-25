@@ -11,10 +11,9 @@ var bottom = 100;
 // when adjusting code, be careful with ranges of these in sliders if padding is too big it'll overlap and not draw
 // make paddingLeft and right between 0 and some fraction of windowWidth (maybe Math.floor(windowwidth / 5))
 var maxWidth = 1200; //max width of space that can be drawn on
-var Horizontal = 100;
-//var Right = 20;
+var Left = 100;
+var Right = 20;
 var fontStyle = 0.5
-var curCol;
 
 /////letters variables/////
 var col = [['#ef4131', '#ffe600', '#2e3196', '#ec008c'],
@@ -25,9 +24,9 @@ var col = [['#ef4131', '#ffe600', '#2e3196', '#ec008c'],
             ['#fbbb1a', '#ffcec4', '#a027af', '#1c27bc'],
             ['#5ebd74', '#e87543', '#40238a', '#ffcf4a'],
             ['#dbf035', '#FF3E78', '#0031CB', '#15EACF'],
-            ['#ffe225', '#596fff', '#3625f5', '#fc83c0'],
+            ['#3625f5', '#596fff', '#ffe225', '#fc83c0'],
             ['#28bf94', '#ffffff', '#1d49c5', '#fccaf0'],
-            ['#f5662a', '#30309e', '#a2109b', '#f0322b']];
+            ['#f2562a', '#29328e', '#a2109b', '#f0322b']];
 		   //color palette array
 var fontA = {'a': a_a, 'b': a_b, 'c': a_c, 'd': a_d, 'e': a_e, 'f': a_f,
             'g': a_g, 'h': a_h, 'i': a_i, 'j': a_j, 'k': a_k, 'l': a_l, 
@@ -47,33 +46,17 @@ function background_color() {
     document.body.style.backgroundColor = bg;
 }
 
-function control_color() {
-    document.querySelector(".qs_title_bar").style.backgroundColor = curCol[1];
-    document.querySelector(".qs_main").style.backgroundColor = curCol[0];
-    document.querySelector(".qs_range").style.backgroundColor = curCol[2];
-    document.querySelector("input#leading.qs_range").style.backgroundColor = curCol[2];
-    document.querySelector("input#tracking.qs_range").style.backgroundColor = curCol[2];
-    document.querySelector("input#Top.qs_range").style.backgroundColor = curCol[2];
-    document.querySelector("input#bottom.qs_range").style.backgroundColor = curCol[2];
-    document.querySelector("input#Horizontal.qs_range").style.backgroundColor = curCol[2];
-    //document.querySelector("input#Right.qs_range").style.backgroundColor = curCol[2];
-    document.querySelector("input#colorPalette.qs_range").style.backgroundColor = curCol[2];
-    document.querySelector("input#fontStyle.qs_range").style.backgroundColor = curCol[2];
-    document.querySelector(".qs_range:focus").style.backgroundColor = curCol[3];
-}
-
 function setup() {
 	
 	//Create the GUI
-    gui = createGui('Customize!', -1, -1);
+    gui = createGui('Customize!', windowWidth - 250, 40);
     sliderRange(30, 100, 5);
     gui.addGlobals('unit');
     sliderRange(10, 150, 2);
     gui.addGlobals('leading');
     gui.addGlobals('tracking');
     gui.addGlobals('Top','bottom');
-    sliderRange(10, 300, 2);
-    gui.addGlobals('Horizontal');
+    gui.addGlobals('Left','Right');
     sliderRange(0, 10, 1);
     gui.addGlobals('colorPalette','bg','message'); 
     sliderRange(0, 1, 0.1);
@@ -85,7 +68,7 @@ function setup() {
 function draw() {
     var numLetters = message.length;
     //determines height needed for canvas
-    var canvasSpace = maxWidth - 2 * Horizontal + tracking; //the space letters can be drawn
+    var canvasSpace = maxWidth - Left - Right + tracking; //the space letters can be drawn
     var numLettersInRow = Math.floor(canvasSpace / (unit + tracking));
     var maxVertical = Math.floor(numLetters / numLettersInRow); //number of rows or max vertical height
     var maxEndY = maxVertical * (unit + leading) + Top;
@@ -103,18 +86,17 @@ function draw() {
         typeLetter(cur,i); 
     }
     background_color();
-    control_color();
 }
 
 function typeLetter(ltr,i) {
     //determines startX and startY
-    var startX = i * (unit + tracking) + Horizontal;
-    var canvasSpace = maxWidth - 2*Horizontal + tracking; //the space letters can be drawn
+    var startX = i * (unit + tracking) + Left;
+    var canvasSpace = maxWidth - Left - Right + tracking; //the space letters can be drawn
     var numLettersInRow = Math.floor(canvasSpace / (unit + tracking));
-    startX = i % numLettersInRow * (unit + tracking) + Horizontal; //makes sure startX stays within canvas
+    startX = i % numLettersInRow * (unit + tracking) + Left; //makes sure startX stays within canvas
     var vertical = Math.floor(i / numLettersInRow);
     var startY = vertical * (unit + leading) + Top; //moves startY down when text goes to next line
-    curCol = col[colorPalette];
+    var curCol = col[colorPalette];
     var fontCounter = random(1);
     if (ltr != " ") {
 	   if (fontCounter <= fontStyle) {
@@ -123,10 +105,6 @@ function typeLetter(ltr,i) {
         else {
             fontA[ltr](startX, startY, curCol);
         }
-    }
-    
-    if (startY < 10) {
-        startY = 10;
     }
 }
 
